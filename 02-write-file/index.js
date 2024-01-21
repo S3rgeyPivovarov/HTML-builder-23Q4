@@ -1,16 +1,16 @@
-const fs = require('fs');
-const util = require('util');
-
-const writeFile = util.promisify(fs.writeFile);
-const appendFile = util.promisify(fs.appendFile);
+const fs = require('fs').promises;
+const path = require('path');
 
 console.log('Hello');
 
 (async function createFileAndAddText() {
-  await writeFile('text-02-task.txt', '', (error) => {
-    if (error) throw error;
-  });
-  console.log('File created');
+  const filePath = path.join(__dirname, 'text-02-task.txt');
+  try {
+    await fs.writeFile(filePath, '');
+    console.log('File created');
+  } catch (error) {
+    console.error(error);
+  }
 
   console.log('Waiting for input...\n');
 
@@ -19,9 +19,13 @@ console.log('Hello');
       if (input.toString().trim() === 'exit') {
         process.exit();
       } else {
-        await appendFile('text-02-task.txt', input + '\n');
-        console.log('\nText added to file');
-        console.log('Waiting for input...\n');
+        try {
+          await fs.appendFile(filePath, input + '\n');
+          console.log('\nText added to file');
+          console.log('Waiting for input...\n');
+        } catch (error) {
+          console.error(error);
+        }
       }
     })();
   });
