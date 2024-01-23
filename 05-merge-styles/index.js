@@ -4,7 +4,9 @@ const path = require('path');
 
 async function mergeStyles(sourceDir, destinationDir, bundleFileName) {
   fs.readdir(sourceDir, (error, files) => {
-    if (error) throw error;
+    if (error) {
+      console.log('ss');
+    }
 
     files.forEach((file) => {
       if (path.extname(file) === '.css') {

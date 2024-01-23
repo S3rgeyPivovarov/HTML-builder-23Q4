@@ -20,7 +20,7 @@ console.log('Hello');
         process.exit();
       } else {
         try {
-          await fs.appendFile(filePath, input + '\n');
+          await fs.appendFile(filePath, input);
           console.log('\nText added to file');
           console.log('Waiting for input...\n');
         } catch (error) {
