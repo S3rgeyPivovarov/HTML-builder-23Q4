@@ -3,6 +3,7 @@ const path = require('path');
 
 async function createProject(directories, targets) {
   try {
+    await fs.rm(directories.project, { force: true, recursive: true });
     await fs.mkdir(directories.project, { recursive: true });
 
     let htmlContent = await fs.readFile(directories.template, 'utf-8');
@@ -34,7 +35,7 @@ async function createProject(directories, targets) {
     );
 
     for (const styleContent of styleContents) {
-      await fs.appendFile(targets.css, styleContent);
+      await fs.appendFile(targets.css, styleContent, { flag: 'a' });
     }
 
     await copyDir(directories.assets, targets.assets);
